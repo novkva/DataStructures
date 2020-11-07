@@ -57,10 +57,6 @@ namespace DataStructures
                 RizeSize();
             }
             Length++;
-            //int[] newArray = new int[_array.Length];
-            //Array.Copy(_array, 0, newArray, 1, Length);
-            //newArray[0] = element;
-            //_array = newArray;
             MoveElements();
             _array[0] = element;
             
@@ -73,10 +69,8 @@ namespace DataStructures
                 RizeSize();
             }
             Length++;
-            int[] newArray = new int[_array.Length];
-            Array.Copy(_array, 0, newArray, 1, Length);
-            newArray[0] = element;
-            _array = newArray;
+            MakePlace(ind);
+            _array[ind] = element;
 
         }
 
@@ -96,6 +90,14 @@ namespace DataStructures
         {
             int[] newArray = new int[_array.Length];
             Array.Copy(_array, 0, newArray, amount, Length);
+            _array = newArray;
+        }
+
+        private void MakePlace(int startIndex, int size=1)
+        {
+            int[] newArray = new int[_array.Length];
+            Array.Copy(_array, 0, newArray, 0, startIndex);
+            Array.Copy(_array, startIndex, newArray, startIndex+size, Length-startIndex);
             _array = newArray;
         }
     }

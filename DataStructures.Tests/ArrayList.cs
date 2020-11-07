@@ -24,5 +24,16 @@ namespace DataStructures.Tests
             actual.AddToFirst(5);
             Assert.AreEqual(expected, actual);
         }
+
+        [Test]
+        public void AddByInd()
+        {
+            ArrayList expected = new ArrayList(new int[] { 5, 2, 8, 14, 0 });
+            ArrayList actual = new ArrayList(new int[] { 5, 2, 14, 0 });
+            //actual.Add(5);
+            //actual.Add(2);
+            actual.AddByIndex(8, 2);
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
