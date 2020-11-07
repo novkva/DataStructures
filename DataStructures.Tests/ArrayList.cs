@@ -35,5 +35,42 @@ namespace DataStructures.Tests
             actual.AddByIndex(8, 2);
             Assert.AreEqual(expected, actual);
         }
+
+        [Test]
+        public void Delete()
+        {
+            ArrayList expected = new ArrayList(new int[] { 5, 2, 8, 14 });
+            ArrayList actual = new ArrayList(new int[] { 5, 2, 8, 14, 0 });
+            actual.DeleteLast();
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void Delete2()
+        {
+            ArrayList expected = new ArrayList(new int[] { 5, 2, 8, 14, 0 });
+            ArrayList actual = new ArrayList(new int[] { 5, 2, 8, 14, 0 });
+            actual.AddByIndex(7, 5);
+            actual.DeleteLast();
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void DeleteFirst()
+        {
+            ArrayList expected = new ArrayList(new int[] { 5, 2, 8, 14 });
+            ArrayList actual = new ArrayList(new int[] {7, 5, 2, 8, 14});
+            actual.DeleteFirst();
+            Assert.AreEqual(expected, actual);
+        }
+        
+        [Test]
+        public void DeleteInd()
+        {
+            ArrayList expected = new ArrayList(new int[] { 5, 2, 8, 14 });
+            ArrayList actual = new ArrayList(new int[] { 5,2, 9, 8, 14});
+            actual.DeleteIndex(2);
+            Assert.AreEqual(expected, actual);
+        }
     }
 }

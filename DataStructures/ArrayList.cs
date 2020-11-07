@@ -74,6 +74,48 @@ namespace DataStructures
 
         }
 
+        public void DeleteLast()
+        {
+            DeleteIndex(Length - 1);
+            //DeleteOneElement(0);
+            //if (Length <= _array.Length/2)
+            //{
+            //    DecreaseSize();
+            //}
+        }
+
+        public void DeleteFirst()
+        {
+            DeleteIndex(0);
+            //DeleteOneElement(1);
+            //if(Length <= _array.Length / 2)
+            //{
+            //    DecreaseSize();
+            //}
+        }
+
+        public void DeleteIndex(int index)
+        {
+            int[] newArray = new int[_array.Length];
+            Array.Copy(_array, 0, newArray, 0, index);
+            Array.Copy(_array, index+1, newArray, index, Length-index -1);
+            Length--;
+            _array = newArray;
+            if (Length <= _array.Length / 2)
+            {
+                DecreaseSize();
+            }
+        }
+
+        private void DeleteOneElement(int start)
+        {
+            //int[] newArray = new int[_array.Length];
+            //Array.Copy(_array, start, newArray, 0, Length - 1);
+            //Length--;
+            //_array = newArray;
+
+        }
+
         private void RizeSize(int size=1)
         {
             int newLength = _array.Length;
@@ -98,6 +140,18 @@ namespace DataStructures
             int[] newArray = new int[_array.Length];
             Array.Copy(_array, 0, newArray, 0, startIndex);
             Array.Copy(_array, startIndex, newArray, startIndex+size, Length-startIndex);
+            _array = newArray;
+        }
+
+        private void DecreaseSize(int size = 1)
+        {
+            int newLength = _array.Length;
+            while (newLength >= Length*2 && newLength >3)
+            {
+                newLength = (int)(newLength * 0.67d);
+            }
+            int[] newArray = new int[newLength];
+            Array.Copy(_array, newArray, newLength);
             _array = newArray;
         }
     }
