@@ -72,5 +72,71 @@ namespace DataStructures.Tests
             actual.DeleteIndex(2);
             Assert.AreEqual(expected, actual);
         }
+
+        [Test]
+        public void ReturnElement()
+        {
+            ArrayList arrayList = new ArrayList(new int[] {1, 2, 3, 4, 5 });
+            int expected = 2;
+            int actual = arrayList.ReturnElement(1);
+            Assert.AreEqual(expected, actual);
+        }
+        
+        [Test]
+        public void ReturnIndex()
+        {
+            ArrayList arrayList = new ArrayList(new int[] {1, 2, 3, 4, 5 });
+            int expected = 4;
+            int actual = arrayList.ReturnIndex(5);
+            Assert.AreEqual(expected, actual);
+        }
+        
+        [Test]
+        public void ReturnIndexNegative()
+        {
+            ArrayList arrayList = new ArrayList(new int[] {1, 2, 3, 4, 5 });
+            try
+            {
+                int actual = arrayList.ReturnIndex(6);
+            }
+            catch
+            {
+                Assert.Pass();
+            }
+            Assert.Fail();
+        }
+
+        [Test]
+        public void ChangeElement()
+        {
+            ArrayList expected = new ArrayList(new int[] { 5, 2, 8, 14 ,7});
+            ArrayList actual = new ArrayList(new int[] { 5, 2, 9, 14, 7 });
+            actual.ChangeElement(2, 8);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void ChangeElementNegative()
+        {
+            ArrayList arrayList = new ArrayList(new int[] { 1, 2, 3, 4, 5 });
+            try
+            {
+                arrayList.ChangeElement(6, 0);
+            }
+            catch
+            {
+                Assert.Pass();
+            }
+            Assert.Fail();
+        }
+
+        [Test]
+        public void Reverse()
+        {
+            ArrayList expected = new ArrayList(new int[] { 5, 2, 8, 14, 7, 6 });
+            ArrayList actual = new ArrayList(new int[] {6, 7, 14, 8, 2, 5 });
+            actual.Reverse();
+            Assert.AreEqual(expected, actual);
+        }
     }
 }

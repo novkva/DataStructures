@@ -96,6 +96,10 @@ namespace DataStructures
 
         public void DeleteIndex(int index)
         {
+            if (index >= Length)
+            {
+                throw new Exception("Incorrect index");
+            }
             int[] newArray = new int[_array.Length];
             Array.Copy(_array, 0, newArray, 0, index);
             Array.Copy(_array, index+1, newArray, index, Length-index -1);
@@ -104,6 +108,46 @@ namespace DataStructures
             if (Length <= _array.Length / 2)
             {
                 DecreaseSize();
+            }
+        }
+
+        public int ReturnElement(int index)
+        {
+            if (index>= Length)
+            {
+                throw new Exception("Incorrect index");
+            }
+            return _array[index];
+        }
+
+        public int ReturnIndex(int element)
+        {
+            for (int i=0; i < Length; i++)
+            {
+                if (_array[i] == element)
+                {
+                    return i;
+                }
+            }
+            throw new Exception("There isn't element");
+        }
+
+        public void ChangeElement(int index, int value)
+        {
+            if (index >= Length)
+            {
+                throw new Exception("There isn't index");
+            }
+            _array[index] = value;
+        }
+
+        public void Reverse()
+        {
+            for (int i = 0; i < Length / 2; i++)
+            {
+                int j = _array[Length - 1 - i];
+                _array[Length - 1 - i] = _array[i];
+                _array[i] = j;
             }
         }
 
