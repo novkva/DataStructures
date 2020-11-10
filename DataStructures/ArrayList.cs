@@ -27,6 +27,26 @@ namespace DataStructures
             Array.Copy(_array, this._array, Length);  
         }
 
+        public int this[int index]
+        {
+            get
+            {
+                if (index >= Length || index < 0)
+                {
+                    throw new Exception("Incorrect index");
+                }
+                return _array[index];
+            }
+            set
+            {
+                if (index >= Length || index < 0)
+                {
+                    throw new Exception("Incorrect index");
+                }
+                _array[index] = value;
+            }
+        }
+
         public override bool Equals(object obj)
         {
             ArrayList arrayList = (ArrayList)obj;
@@ -61,37 +81,43 @@ namespace DataStructures
             
         }
 
-        public void AddByIndex(int element, int ind)
+        public void AddByIndex(int element, int index)
         {
+            if (index >= Length || index < 0)
+            {
+                throw new ArgumentOutOfRangeException("Incorrect index");
+            }
             if (_array.Length <= Length)
             {
                 RizeSize();
             }
-            MakePlace(ind);
+            MakePlace(index);
             Length++;
-            _array[ind] = element;
+            _array[index] = element;
 
         }
 
         public void DeleteLast()
         {
             //DeleteIndex(Length - 1);
-            Length--;
+            if(Length != 0)
+            {
+                Length--;
+            }
+            
         }
 
         public void DeleteFirst()
         {
-            DeleteIndex(0);
-            //DeleteOneElement(1);
-            //if(Length <= _array.Length / 2)
-            //{
-            //    DecreaseSize();
-            //}
+            if (Length != 0)
+            {
+                DeleteIndex(0);
+            }
         }
 
         public void DeleteIndex(int index)
         {
-            if (index >= Length)
+            if (index >= Length || index < 0)
             {
                 throw new Exception("Incorrect index");
             }
@@ -106,15 +132,6 @@ namespace DataStructures
             }
         }
 
-        public int ReturnElement(int index)
-        {
-            if (index>= Length)
-            {
-                throw new Exception("Incorrect index");
-            }
-            return _array[index];
-        }
-
         public int ReturnIndex(int element)
         {
             for (int i=0; i < Length; i++)
@@ -127,14 +144,14 @@ namespace DataStructures
             throw new Exception("There isn't element");
         }
 
-        public void ChangeElement(int index, int value)
-        {
-            if (index >= Length)
-            {
-                throw new Exception("There isn't index");
-            }
-            _array[index] = value;
-        }
+        //public void ChangeElement(int index, int value)
+        //{
+        //    if (index >= Length)
+        //    {
+        //        throw new Exception("There isn't index");
+        //    }
+        //    _array[index] = value;
+        //}
 
         public void Reverse()
         {
@@ -252,7 +269,7 @@ namespace DataStructures
             }
         }
 
-        public void AddArray(int[] addArray)
+        public void Add(int[] addArray)
         {
             if ((Length + addArray.Length) >= _array.Length)
             {
