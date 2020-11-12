@@ -82,7 +82,6 @@ namespace DataStructures
             }
         }
 
-
         public void AddToFirst(int element)
         {
             if (_array.Length <= Length)
@@ -92,7 +91,6 @@ namespace DataStructures
             MoveElements();
             Length++;
             _array[0] = element;
-            
         }
 
         public void AddToFirst(int[] addArray)
@@ -125,7 +123,7 @@ namespace DataStructures
             _array[index] = element;
 
         }
-
+        
         public void AddByIndex(int[] array, int index)
         {
             if (index >= Length || index < 0)
@@ -143,50 +141,41 @@ namespace DataStructures
                 _array[index+i] = array[i];
                 Length++;
             }
-
         }
-
-        public void DeleteLast()
+        
+        public void DeleteLast(int amount = 1)
         {
-            //DeleteIndex(Length - 1);
-            if(Length != 0)
+            if(Length >= amount)
             {
-                Length--;
-            }
-            
-        }
-
-        public void DeleteLast(int amount)
-        {
-            //DeleteIndex(Length - 1)
-            if (Length <= amount)
-            {
-                Length = 0;
-            }
-            else if (amount != 0)
-            {
-                DeleteByIndex(Length - amount, amount);
-            }
-
-        }
-
-        public void DeleteFirst()
-        {
-            if (Length != 0)
-            {
-                DeleteByIndex(0);
-            }
-        }
-
-        public void DeleteFirst(int amount)
-        {
-            if (Length <= amount)
-            {
-                Length = 0;
+                Length-=amount;
             }
             else
             {
-                DeleteByIndex(0, amount);
+                Length = 0;
+            }
+            if (Length <= _array.Length / 2)
+            {
+                DecreaseSize();
+            }
+        }
+        
+        public void DeleteFirst(int amount=1)
+        {
+           for(int i=0; i < Length-amount; i++)
+            {
+                _array[i] = _array[i + amount];
+            }
+            if (Length >= amount)
+            {
+                Length-= amount;
+            }
+            else
+            {
+                Length = 0;
+            }
+            if (Length <= _array.Length / 2)
+            {
+                DecreaseSize();
             }
         }
 
@@ -196,17 +185,21 @@ namespace DataStructures
             {
                 throw new Exception("Incorrect index");
             }
-            int[] newArray = new int[_array.Length];
-            Array.Copy(_array, 0, newArray, 0, index);
-            Array.Copy(_array, index+size, newArray, index, Length-index -size);
-            Length-=size;
-            _array = newArray;
+            if (size > Length - index)
+            {
+                size = Length - index;
+            }
+            for(int i = index; i < Length- size; i++)
+            {
+                _array[i] = _array[i + size];
+            }
+            Length -= size;
             if (Length <= _array.Length / 2)
             {
                 DecreaseSize();
             }
         }
-
+        
         public int ReturnIndex(int element)
         {
             for (int i=0; i < Length; i++)
@@ -218,7 +211,7 @@ namespace DataStructures
             }
             throw new Exception("There isn't element");
         }
-
+        
         public void Reverse()
         {
             for (int i = 0; i < Length / 2; i++)
@@ -228,7 +221,7 @@ namespace DataStructures
                 _array[i] = j;
             }
         }
-
+        
         public int MaxValue()
         {
             if (Length == 0)
@@ -245,7 +238,7 @@ namespace DataStructures
             }
             return max;
         }
-
+        
         public int MinValue()
         {
             if (Length == 0)
@@ -262,7 +255,7 @@ namespace DataStructures
             }
             return min;
         }
-
+        
         public int FindIndexOfMinValue()
         {
             if (Length == 0)
@@ -281,7 +274,7 @@ namespace DataStructures
             }
             return minInd;
         }
-
+        
         public int FindIndexOfMaxValue()
         {
             if (Length == 0)
@@ -303,46 +296,74 @@ namespace DataStructures
 
         public void SortUp()
         {
-
+            for (int i = 0; i < Length - 1; i++)
+            {
+                int tmp;
+                for (int j = 1; j < Length - i; j++)
+                {
+                    if (_array[j] < _array[j - 1])
+                    {
+                        tmp = _array[j];
+                        _array[j] = _array[j - 1];
+                        _array[j - 1] = tmp;
+                    }
+                }
+            }
         }
 
         public void SortDown()
         {
-
-        }
-
-        public void DeleteFirstValue(int value)
-        {
-            for(int i = 0; i < Length; i++)
+            for (int i = 0; i < Length - 1; i++)
             {
-                if (_array[i] == value)
+                int max = _array[i];
+                int indMax = i;
+
+                for (int j = i; j < Length; j++)
                 {
-                    DeleteByIndex(i);
-                    break;
+                    if (_array[j] > max)
+                    {
+                        max = _array[j];
+                        indMax = j;
+                    }
                 }
+                int k = _array[i];
+                _array[i] = max;
+                _array[indMax] = k;
             }
         }
-
+        
+        public void DeleteFirstValue(int value)
+        {
+            int tmp = 0;
+            for (int i = 0; i < Length; i++)
+            {
+                if (_array[i] == value && tmp==0)
+                {
+                    tmp=1;
+                }
+                else
+                {
+                    _array[i - tmp] = _array[i];
+                }
+            }
+            Length -= tmp;
+        }
+        
         public void DeleteAllValue(int value)
         {
+            int tmp = 0;
             for (int i = 0; i < Length; i++)
             {
                 if (_array[i] == value)
                 {
-                    DeleteByIndex(i);
-                    i--;
+                    tmp++;
+                }
+                else
+                {
+                    _array[i-tmp] = _array[i];
                 }
             }
-        }
-
-
-        private void DeleteOneElement(int start)
-        {
-            //int[] newArray = new int[_array.Length];
-            //Array.Copy(_array, start, newArray, 0, Length - 1);
-            //Length--;
-            //_array = newArray;
-
+            Length -= tmp;
         }
 
         private void RizeSize(int size=1)

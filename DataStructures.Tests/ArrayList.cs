@@ -392,9 +392,9 @@ namespace DataStructures.Tests
         }
 
         [TestCase(new int[] { 8, 8 }, new int[] { }, 1, new int[] { 8, 8 })]
-        [TestCase(new int[] { 10, 12, 18, 40 }, new int[] { 50, 88, 9, 104 }, 3, new int[] {10, 12, 18, 50, 88, 9, 104, 40 })]
-        [TestCase(new int[] { 1 }, new int[] { 2, 2 }, 0, new int[] { 2, 2, 1 })]
-        [TestCase(new int[] { -10, -20, -30, -40, -50 }, new int[] { -60 }, 4, new int[] { -10, -20, -30, -40, -60, -50 })]
+       [TestCase(new int[] { 10, 12, 18, 40 }, new int[] { 50, 88, 9, 104 }, 3, new int[] {10, 12, 18, 50, 88, 9, 104, 40 })]
+       [TestCase(new int[] { -10, -20, -30, -40, -50 }, new int[] { -60 }, 4, new int[] { -10, -20, -30, -40, -60, -50 })]
+       [TestCase(new int[] {1 }, new int[] { 2, 2}, 0, new int[] {2, 2, 1 })]
         public void AddByIndexArray(int[] array, int[] addArray, int index, int[] expectedArray)
         {
             ArrayList expected = new ArrayList(expectedArray);
@@ -405,7 +405,8 @@ namespace DataStructures.Tests
 
         [TestCase(new int[] { }, new int[] { }, 0)]
         [TestCase(new int[] { }, new int[] { 5, 4, 11 }, 0)]
-        [TestCase(new int[] { 5, 3}, new int[] {1, 1, 11 }, 2)]
+        [TestCase(new int[] { }, new int[] { }, 1)]
+        [TestCase(new int[] { 5, 3}, new int[] {1, 1, 11 }, 3)]
         [TestCase(new int[] { 8, 1}, new int[] {0, 7, 65 }, -3)]
         public void AddByIndexArrayNegative(int[] array, int[] addArray, int index)
         {
@@ -447,18 +448,44 @@ namespace DataStructures.Tests
             actual.DeleteFirst(amount);
             Assert.AreEqual(expected, actual);
         }
-        //no
+
         [TestCase(new int[] { 7, 4, 1, 5, 0 }, 2, 3, new int[] { 7, 4 })]
-        [TestCase(new int[] { 8, 7 }, 2, new int[] { })]
-        [TestCase(new int[] { 8, 7 }, 3, new int[] { })]
-        [TestCase(new int[] { 8, 7, 6, 5, 4 }, 2, new int[] { 6, 5, 4 })]
-        [TestCase(new int[] { 8, 7, 6, 5, 4 }, 0, new int[] { 8, 7, 6, 5, 4 })]
-        [TestCase(new int[] { 8, 7, 6, 5, 4, 8, 7, 6, 5, 4, 8, 7, 6, 5, 4, 8, 7, 6, 5, 4, 8, 7, 6, 5, 4, 8, 7, 6, 5, 4 }, 29, new int[] { 4 })]
+        [TestCase(new int[] { 8, 7 }, 0, 2, new int[] { })]
+        [TestCase(new int[] { 8, 7 }, 0, 3, new int[] { })]
+        [TestCase(new int[] { 8, 7, 6, 5, 4 }, 1, 2, new int[] { 8, 5, 4 })]
+        [TestCase(new int[] { 8, 7, 6, 5, 4 }, 4, 0, new int[] { 8, 7, 6, 5, 4 })]
+        [TestCase(new int[] {7, 3, 1, 7, 3, 1, 7, 3, 1 }, 4, 10, new int[] { 7, 3, 1, 7 })]
         public void DeleteByIndexElements(int[] array, int index, int amount, int[] expectedArray)
         {
             ArrayList expected = new ArrayList(expectedArray);
             ArrayList actual = new ArrayList(array);
             actual.DeleteByIndex(index, amount);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(new int[] { }, new int[] { })]
+        [TestCase(new int[] {1, 8, 45, 74, -5, 89, 11 }, new int[] { -5, 1, 8, 11, 45, 74, 89})]
+        [TestCase(new int[] { 0, 7, 8, 7, 0, 1}, new int[] { 0, 0, 1, 7, 7, 8})]
+        [TestCase(new int[] { -88, -58, 41, 72, -5, 0, 1, 102, -9}, new int[] {-88, -58, -9, -5, 0, 1, 41, 72, 102 })]
+        [TestCase(new int[] {0, 0, 0, 7, 9, 11, -8, 5, -41 }, new int[] { -41, -8, 0, 0, 0, 5, 7, 9, 11})]
+        public void SortUp(int[] array, int[] expectedArray) 
+        {
+            ArrayList actual = new ArrayList(array);
+            ArrayList expected = new ArrayList(expectedArray);
+            actual.SortUp();
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(new int[] { }, new int[] { })]
+        [TestCase(new int[] { 1, 8, 45, 74, -5, 89, 11 }, new int[] { 89, 74, 45, 11, 8, 1, -5 })]
+        [TestCase(new int[] { 0, 7, 8, 7, 0, 1 }, new int[] {8, 7, 7, 1, 0, 0 })]
+        [TestCase(new int[] { -88, -58, 41, 72, -5, 0, 1, 102, -9 }, new int[] {102, 72, 41, 1, 0, -5, -9, -58, -88 })]
+        [TestCase(new int[] { 0, 0, 0, 7, 9, 11, -8, 5, -41 }, new int[] {11, 9, 7, 5, 0, 0,0 , -8, -41 })]
+        public void SortDown(int[] array, int[] expectedArray)
+        {
+            ArrayList actual = new ArrayList(array);
+            ArrayList expected = new ArrayList(expectedArray);
+            actual.SortDown();
             Assert.AreEqual(expected, actual);
         }
     }
