@@ -181,6 +181,198 @@ namespace DataStructures
             }
         }
 
+        public void DeleteLast(int amount = 1)
+        {
+            if (Length > amount)
+            {
+                Length -= amount;
+            }
+            else
+            {
+                Length = 0;
+            }
+        }
+
+        public void DeleteFirst(int amount = 1)
+        {
+            if (Length > amount)
+            {
+                Node crnt = _root;
+                for(int i = 0; i < amount-1; i++)
+                {
+                   crnt=crnt.Next;
+                }
+                _root = crnt.Next;
+                Length -= amount;
+            }
+            else
+            {
+                Length = 0;
+            }
+        }
+
+        public void DeleteByIndex(int index, int size = 1)
+        {
+            if (index < 0 || index >= Length)
+            {
+                throw new IndexOutOfRangeException();
+            }
+            if (index == 0)
+            {
+                DeleteFirst(size);
+            }
+            else
+            {
+                Node crnt = _root;
+                for (int i = 0; i < index - 1; i++)
+                {
+                    crnt = crnt.Next;
+                }
+
+                if (size < Length - index)
+                {
+                    Node tmp = crnt;
+                    for (int i = 0; i < size; i++)
+                    {
+                        crnt = crnt.Next;
+                    }
+                    tmp.Next = crnt.Next;
+                    Length-=size;
+                }
+                else
+                {
+                    Length = index;
+                }
+            }
+        }
+
+        public int ReturnIndex(int element)
+        {
+            Node crnt = _root;
+            for (int i = 0; i < Length; i++)
+            {
+                if (crnt.Value == element)
+                {
+                    return i;
+                }
+                crnt = crnt.Next;
+            }
+            throw new Exception("There isn't element");
+        }
+
+        public void Reverse()
+        {
+
+        }
+
+        public int MaxValue()
+        {
+            if (Length == 0)
+            {
+                throw new Exception("Empty array");
+            }
+            Node crnt = _root;
+            int max = crnt.Value;
+            for (int i = 0; i < Length-1; i++)
+            {
+                crnt = crnt.Next;
+                if (crnt.Value > max)
+                {
+                    max = crnt.Value;
+                }
+            }
+            return max;
+        }
+
+        public int MinValue()
+        {
+            if (Length == 0)
+            {
+                throw new Exception("Empty array");
+            }
+            Node crnt = _root;
+            int min = crnt.Value;
+            for (int i = 0; i < Length - 1; i++)
+            {
+                crnt = crnt.Next;
+                if (crnt.Value < min)
+                {
+                    min = crnt.Value;
+                }
+            }
+            return min;
+        }
+
+        public int FindIndexOfMinValue()
+        {
+            if (Length == 0)
+            {
+                throw new Exception("Empty array");
+            }
+            Node crnt = _root;
+            int min = crnt.Value;
+            int minInd = 0;
+            for (int i = 0; i < Length - 1; i++)
+            {
+                crnt = crnt.Next;
+                if (crnt.Value < min)
+                {
+                    min = crnt.Value;
+                    minInd = i + 1;
+                }
+            }
+            return minInd;
+        }
+
+        public int FindIndexOfMaxValue()
+        {
+            if (Length == 0)
+            {
+                throw new Exception("Empty array");
+            }
+            Node crnt = _root;
+            int max = crnt.Value;
+            int maxInd = 0;
+            for (int i = 0; i < Length - 1; i++)
+            {
+                crnt = crnt.Next;
+                if (crnt.Value > max)
+                {
+                    max = crnt.Value;
+                    maxInd = i + 1;
+                }
+            }
+            return maxInd;
+        }
+
+        public void SortUp()
+        {
+
+        }
+
+        public void SortDown()
+        {
+
+        }
+
+        public void DeleteFirstValue(int value)
+        {
+            try
+            {
+                int index = ReturnIndex(value);
+                DeleteByIndex(index);
+            }
+            catch
+            {
+            }  
+        }
+
+        public void DeleteAllValue(int value)
+        {
+            Node crnt = _root;
+
+        }
+
         public override bool Equals(object obj)
         {
             LinkedList linkedList = (LinkedList)obj;
