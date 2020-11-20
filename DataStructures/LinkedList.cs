@@ -207,7 +207,10 @@ namespace DataStructures
 
         public void DeleteByIndex(int index, int size = 1)
         {
-            CheckIndexOutOfRangeException(index);
+            if (index < 0 || index >= Length)
+            {
+                throw new IndexOutOfRangeException();
+            }
             if (index == 0)
             {
                 DeleteFirst(size);
