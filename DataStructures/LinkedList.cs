@@ -39,6 +39,7 @@ namespace DataStructures
         {
             get
             {
+                CheckIndexOutOfRangeException(index);
                 Node tmp = _root;
                 for (int i = 0; i < index; i++)
                 {
@@ -48,6 +49,7 @@ namespace DataStructures
             }
             set
             {
+                CheckIndexOutOfRangeException(index);
                 Node tmp = _root;
                 for (int i = 0; i < index; i++)
                 {
