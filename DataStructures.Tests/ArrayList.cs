@@ -108,7 +108,7 @@ namespace DataStructures.Tests
         public void DeleteIndexOneElementNegative(int[] array, int index)
         {
             ArrayList arrayList = new ArrayList(array);
-            Assert.Throws<Exception>(() => arrayList.DeleteByIndex(index));
+            Assert.Throws<ArgumentOutOfRangeException> (() => arrayList.DeleteByIndex(index));
         }
 
         [TestCase(new int[] { }, 0)]
