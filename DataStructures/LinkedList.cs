@@ -125,10 +125,7 @@ namespace DataStructures
 
         public void AddByIndex(int value, int index)
         {
-            if (index < 0 || index > Length)
-            {
-                throw new IndexOutOfRangeException();
-            }
+            CheckIndexOutOfRangeException(index);
             if (index != 0)
             {
                 Node crnt = _root;
@@ -149,10 +146,7 @@ namespace DataStructures
 
         public void AddByIndex(int[] addArray, int index)
         {
-            if (index < 0 || index > Length)
-            {
-                throw new IndexOutOfRangeException();
-            }
+            CheckIndexOutOfRangeException(index);
             if (index != 0)
             {
                 Node crnt = _root;
@@ -213,10 +207,7 @@ namespace DataStructures
 
         public void DeleteByIndex(int index, int size = 1)
         {
-            if (index < 0 || index >= Length)
-            {
-                throw new IndexOutOfRangeException();
-            }
+            CheckIndexOutOfRangeException(index);
             if (index == 0)
             {
                 DeleteFirst(size);
@@ -262,15 +253,24 @@ namespace DataStructures
 
         public void Reverse()
         {
-
+            if (Length == 0)
+            {
+                return;
+            }
+            Node oldRoot = _root;
+            Node tmp;
+            while (oldRoot.Next != null)
+            {
+                tmp = oldRoot.Next;
+                oldRoot.Next = tmp.Next;
+                tmp.Next = _root;
+                _root = tmp;
+            }
         }
 
         public int MaxValue()
         {
-            if (Length == 0)
-            {
-                throw new Exception("Empty array");
-            }
+            CheckEmpty();
             Node crnt = _root;
             int max = crnt.Value;
             for (int i = 0; i < Length-1; i++)
@@ -286,10 +286,7 @@ namespace DataStructures
 
         public int MinValue()
         {
-            if (Length == 0)
-            {
-                throw new Exception("Empty array");
-            }
+            CheckEmpty();
             Node crnt = _root;
             int min = crnt.Value;
             for (int i = 0; i < Length - 1; i++)
@@ -305,10 +302,7 @@ namespace DataStructures
 
         public int FindIndexOfMinValue()
         {
-            if (Length == 0)
-            {
-                throw new Exception("Empty array");
-            }
+            CheckEmpty();
             Node crnt = _root;
             int min = crnt.Value;
             int minInd = 0;
@@ -326,10 +320,7 @@ namespace DataStructures
 
         public int FindIndexOfMaxValue()
         {
-            if (Length == 0)
-            {
-                throw new Exception("Empty array");
-            }
+            CheckEmpty();
             Node crnt = _root;
             int max = crnt.Value;
             int maxInd = 0;
@@ -347,12 +338,42 @@ namespace DataStructures
 
         public void SortUp()
         {
-
+            for (int i = 0; i < Length; i++)
+            {
+                for (int j = i; j > 0; j--)
+                {
+                    if (this[j] < this[j - 1])
+                    {
+                        int k = this[j];
+                        this[j] = this[j - 1];
+                        this[j - 1] = k;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
         }
 
         public void SortDown()
         {
-
+            for (int i = 0; i < Length; i++)
+            {
+                for (int j = i; j > 0; j--)
+                {
+                    if (this[j] > this[j - 1])
+                    {
+                        int k = this[j];
+                        this[j] = this[j - 1];
+                        this[j - 1] = k;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
         }
 
         public void DeleteFirstValue(int value)
@@ -369,7 +390,32 @@ namespace DataStructures
 
         public void DeleteAllValue(int value)
         {
+            if (Length == 0)
+            {
+                return;
+            }
             Node crnt = _root;
+            Node tmp = crnt;
+            while (tmp.Next!=null) 
+            {
+                if (crnt.Value == value)
+                {
+                    if (_root.Value == crnt.Value)
+                    {
+                        _root = crnt.Next;
+                    }
+                    else
+                    {
+                        tmp.Next = crnt.Next;
+                    }
+                    Length--;
+                }
+                else
+                {
+                    tmp = crnt;
+                }
+                crnt = crnt.Next;
+            }
 
         }
 
@@ -405,6 +451,22 @@ namespace DataStructures
                 tmp = tmp.Next;
             }
             return s;
+        }
+
+        private void CheckEmpty()
+        {
+            if (Length == 0)
+            {
+                throw new Exception("Empty array");
+            }
+        }
+
+        private void CheckIndexOutOfRangeException(int index)
+        {
+            if (index < 0 || index > Length)
+            {
+                throw new IndexOutOfRangeException();
+            }
         }
     }
 }

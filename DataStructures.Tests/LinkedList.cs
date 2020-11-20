@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace DataStructures.Tests
 {
-    class Class1
+    class LinkedListTest
     {
         [TestCase(new int[] { 1, 2 , 5}, 6, new int[] {1, 2, 5, 6})]
         [TestCase(new int[] { }, 6, new int[] { 6})]
@@ -388,6 +388,74 @@ namespace DataStructures.Tests
             LinkedList expected = new LinkedList(expectedArray);
             LinkedList actual = new LinkedList(array);
             actual.DeleteFirstValue(value);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(new int[] { }, 9, new int[] { })]
+        [TestCase(new int[] { 1, 2 }, 2, new int[] { 1 })]
+        [TestCase(new int[] { 8, 8, 8, 4, 5, 7 }, 8, new int[] { 4, 5, 7 })]
+        [TestCase(new int[] { 90, 40, 50, 40, 100, 40, 40 }, 40, new int[] { 90, 50, 100 })]
+        [TestCase(new int[] { 66, 77, 88, 99, 111, 111, 111 }, 111, new int[] { 66, 77, 88, 99 })]
+        [TestCase(new int[] { 0, 5, 15, 25 }, 0, new int[] { 5, 15, 25 })]
+        [TestCase(new int[] { 0, 5, 15, 25 }, 15, new int[] { 0, 5, 25 })]
+        [TestCase(new int[] { 0, 5, 15, 15, 25 }, 15, new int[] { 0, 5, 25 })]
+        [TestCase(new int[] { 0, 5, 15, 13, 15, 25 }, 15, new int[] { 0, 5, 13, 25 })]
+        public void DeleteAllValue(int[] array, int value, int[] expectedArray)
+        {
+            LinkedList expected = new LinkedList(expectedArray);
+            LinkedList actual = new LinkedList(array);
+            actual.DeleteAllValue(value);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(new int[] { }, new int[] { })]
+        [TestCase(new int[] { 1 }, new int[] { 1 })]
+        [TestCase(new int[] { 40, 50, 60, 80 }, new int[] { 80, 60, 50, 40 })]
+        [TestCase(new int[] { 95, 94, 93, 92, 91, 90, 89 }, new int[] { 89, 90, 91, 92, 93, 94, 95 })]
+        [TestCase(new int[] { -8, -8 }, new int[] { -8, -8 })]
+        public void Reverse(int[] array, int[] expectedArray)
+        {
+            LinkedList expected = new LinkedList(expectedArray);
+            LinkedList actual = new LinkedList(array);
+            actual.Reverse();
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(new int[] { }, new int[] { })]
+        [TestCase(new int[] { 1, 8, 45, 74, -5, 89, 11 }, new int[] { -5, 1, 8, 11, 45, 74, 89 })]
+        [TestCase(new int[] { 0, 7, 8, 7, 0, 1 }, new int[] { 0, 0, 1, 7, 7, 8 })]
+        [TestCase(new int[] { -88, -58, 41, 72, -5, 0, 1, 102, -9 }, new int[] { -88, -58, -9, -5, 0, 1, 41, 72, 102 })]
+        [TestCase(new int[] { 0, 0, 0, 7, 9, 11, -8, 5, -41 }, new int[] { -41, -8, 0, 0, 0, 5, 7, 9, 11 })]
+        public void SortUp(int[] array, int[] expectedArray)
+        {
+            LinkedList expected = new LinkedList(expectedArray);
+            LinkedList actual = new LinkedList(array);
+            actual.SortUp();
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(new int[] { }, new int[] { })]
+        [TestCase(new int[] { 1, 8, 45, 74, -5, 89, 11 }, new int[] { 89, 74, 45, 11, 8, 1, -5 })]
+        [TestCase(new int[] { 0, 7, 8, 7, 0, 1 }, new int[] { 8, 7, 7, 1, 0, 0 })]
+        [TestCase(new int[] { -88, -58, 41, 72, -5, 0, 1, 102, -9 }, new int[] { 102, 72, 41, 1, 0, -5, -9, -58, -88 })]
+        [TestCase(new int[] { 0, 0, 0, 7, 9, 11, -8, 5, -41 }, new int[] { 11, 9, 7, 5, 0, 0, 0, -8, -41 })]
+        public void SortDown(int[] array, int[] expectedArray)
+        {
+            LinkedList expected = new LinkedList(expectedArray);
+            LinkedList actual = new LinkedList(array);
+            actual.SortDown();
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void Just()
+        {
+            LinkedList actual = new LinkedList(new int[] { 1, 2, 3, 4, 5, 6, 7, 8 });
+            LinkedList expected = new LinkedList(new int[] { 40, 30, 20, 10, 6, 5,4, 3, 2, 1, 0}); 
+            actual.DeleteLast(2);
+            actual.AddByIndex(new int[] { 10, 20, 30, 40 }, 3);
+            actual.SortDown();
+            actual.Add(0);
             Assert.AreEqual(expected, actual);
         }
     }

@@ -3,7 +3,7 @@ using System;
 
 namespace DataStructures.Tests
 {
-    public class Tests
+    public class ArrayListTests
     {
         [TestCase(new int[] { }, 5, new int[] { 5 })]
         [TestCase(new int[] { 7, 0 }, -1, new int[] { 7, 0, -1 })]
