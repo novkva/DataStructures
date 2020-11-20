@@ -53,6 +53,16 @@ namespace DataStructures
             return true;
         }
 
+        public override string ToString()
+        {
+            string s = "";
+            for (int i = 0; i < Length; i++)
+            {
+                s += _array[i] + ";";
+            }
+            return s;
+        }
+
         public void Add(int element)
         {
             RizeSize();
@@ -298,6 +308,7 @@ namespace DataStructures
                 }
             }
             Length -= tmp;
+            DecreaseSize();
         }
 
         public void DeleteAllValue(int value)
@@ -343,8 +354,16 @@ namespace DataStructures
         private void MakePlace(int startIndex, int size = 1)
         {
             int[] newArray = new int[_array.Length];
-            Array.Copy(_array, 0, newArray, 0, startIndex);
-            Array.Copy(_array, startIndex, newArray, startIndex + size, Length - startIndex);
+            //Array.Copy(_array, 0, newArray, 0, startIndex);
+            //Array.Copy(_array, startIndex, newArray, startIndex + size, Length - startIndex);
+            for (int i = 0; i < startIndex; i++)
+            {
+                newArray[i] = _array[i];
+            }
+            for (int i = startIndex; i < Length; i++)
+            {
+                newArray[i+size] = _array[i];
+            }
             _array = newArray;
         }
 
